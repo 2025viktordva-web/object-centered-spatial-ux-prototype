@@ -1,0 +1,79 @@
+name: Build and deploy prototype
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Detect source
+        id: source
+        shell: bash
+        run: |
+          if [ -f harness-source.zip ]; then
+            echo "archive=true" >> "$GITHUB_OUTPUT"
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          elif [ -f package.json ]; then
+            echo "archive=false" >> "$GITHUB_OUTPUT"
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "archive=false" >> "$GITHUB_OUTPUT"
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Import source archive
+        if: steps.source.outputs.archive == 'true'
+        run: |
+          unzip -o harness-source.zip
+          rm harness-source.zip
+          rm -f .github/workflows/deploy-pages.yml
+      - name: Setup Node
+        if: steps.source.outputs.ready == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install dependencies
+        if: steps.source.outputs.ready == 'true'
+        run: npm ci
+      - name: Build static prototype
+        if: steps.source.outputs.ready == 'true'
+        run: npm run build:pages
+      - name: Configure Pages
+        if: steps.source.outputs.ready == 'true'
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+      - name: Upload Pages artifact
+        if: steps.source.outputs.ready == 'true'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist-pages
+      - name: Commit imported source
+        if: steps.source.outputs.archive == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Import complete prototype source"
+          git push
+      - name: Deploy to GitHub Pages
+        if: steps.source.outputs.ready == 'true'
+        id: deployment
+        uses: actions/deploy-pages@v4
