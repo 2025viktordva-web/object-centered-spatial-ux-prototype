@@ -73,8 +73,8 @@ button:focus-visible,
   min-height: 620px;
   overflow: hidden;
   background:
-    radial-gradient(circle at 53% 40%, rgba(255, 255, 255, 0.82), transparent 32%),
-    linear-gradient(150deg, #eef2ef 0%, #dfe7e3 100%);
+    radial-gradient(circle at 50% 45%, rgba(255, 255, 255, 0.82), transparent 48%),
+    rgba(219, 227, 222, 0.72);
   isolation: isolate;
 }
 
@@ -82,12 +82,8 @@ button:focus-visible,
   position: absolute;
   inset: 0;
   z-index: -1;
-  background-image:
-    linear-gradient(rgba(31, 57, 49, 0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(31, 57, 49, 0.025) 1px, transparent 1px);
-  background-size: 32px 32px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.14), transparent 34%);
   content: "";
-  mask-image: radial-gradient(circle at center, black, transparent 76%);
 }
 
 .workspace[data-composition="focus"] {
@@ -170,34 +166,33 @@ button:focus-visible,
   width: max-content;
   min-height: 44px;
   padding: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.72);
+  border: 0;
   border-radius: 15px;
-  background: rgba(249, 251, 249, 0.79);
-  box-shadow: 0 6px 18px rgba(36, 51, 46, 0.08);
-  backdrop-filter: blur(18px);
+  background: rgba(249, 251, 249, 0.84);
+  box-shadow: none;
+  backdrop-filter: none;
   pointer-events: auto;
   transition:
     background 400ms var(--ease-space),
-    border-radius 400ms var(--ease-space),
-    box-shadow 400ms var(--ease-space);
+    border-radius 400ms var(--ease-space);
 }
 
 .workspace[data-composition="focus"] .command-group {
   border-radius: 22px;
-  background: rgba(249, 251, 249, 0.58);
-  box-shadow: 0 4px 12px rgba(36, 51, 46, 0.05);
+  background: rgba(249, 251, 249, 0.72);
+  box-shadow: none;
 }
 
 .workspace[data-composition="context"] .command-group {
-  border-color: var(--hairline);
   border-radius: 10px;
-  background: rgba(251, 252, 249, 0.96);
+  background: rgba(251, 252, 249, 0.9);
+  box-shadow: none;
 }
 
 .workspace[data-composition="instrument"] .command-group {
   min-height: 40px;
   border-radius: 9px;
-  background: rgba(238, 243, 240, 0.91);
+  background: rgba(244, 247, 245, 0.86);
   box-shadow: none;
 }
 
@@ -328,7 +323,7 @@ button:focus-visible,
   height: 7px;
   border-radius: 50%;
   background: var(--fern);
-  box-shadow: 0 0 0 4px rgba(31, 112, 90, 0.12);
+  box-shadow: none;
 }
 
 .panel {
@@ -564,21 +559,13 @@ button:focus-visible,
   min-width: 0;
   height: 100%;
   overflow: hidden;
-  border-radius: 28px 28px 12px 12px;
-  background:
-    radial-gradient(circle at 50% 45%, rgba(255, 255, 255, 0.82), transparent 48%),
-    rgba(219, 227, 222, 0.72);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.4);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .canvas-shell::after {
-  position: absolute;
-  inset: auto 0 0;
-  z-index: 4;
-  height: calc(var(--tool-h) + 70px);
-  background: linear-gradient(to bottom, transparent, rgba(205, 216, 210, 0.88));
-  content: "";
-  pointer-events: none;
+  content: none;
 }
 
 .canvas-meta {
@@ -1136,17 +1123,49 @@ button:focus-visible,
   left: max(16px, calc(var(--left-w) + var(--workspace-gap) + 16px));
   height: var(--tool-h);
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(24, 37, 33, 0.34);
   border-radius: 24px;
   background:
-    linear-gradient(180deg, rgba(251, 252, 249, 0.96), rgba(239, 244, 241, 0.94));
-  box-shadow: var(--shadow-near);
-  backdrop-filter: blur(24px);
+    linear-gradient(180deg, rgba(255, 255, 252, 0.99) 0%, rgba(239, 244, 241, 0.98) 66%, rgba(224, 232, 227, 0.99) 100%);
+  box-shadow:
+    0 42px 78px rgba(20, 31, 28, 0.3),
+    0 16px 28px rgba(20, 31, 28, 0.2),
+    0 5px 0 rgba(32, 49, 43, 0.13),
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    inset 0 -1px 0 rgba(30, 47, 42, 0.14);
+  backdrop-filter: blur(28px);
   transition:
     inset 480ms var(--ease-space),
     height 480ms var(--ease-space),
     border-radius 480ms var(--ease-space),
     transform 480ms var(--ease-space);
+}
+
+.tool-surface::before {
+  position: absolute;
+  inset: 5px;
+  z-index: 0;
+  border: 1px solid rgba(38, 55, 49, 0.17);
+  border-radius: 19px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.86),
+    inset 0 -8px 18px rgba(48, 70, 62, 0.045);
+  content: "";
+  pointer-events: none;
+}
+
+.tool-surface::after {
+  position: absolute;
+  top: 18px;
+  bottom: 18px;
+  left: 7px;
+  z-index: 1;
+  width: 3px;
+  border-radius: 3px;
+  background: linear-gradient(180deg, var(--apricot), var(--cobalt) 48%, var(--fern));
+  box-shadow: 1px 0 0 rgba(255, 255, 255, 0.72);
+  content: "";
+  pointer-events: none;
 }
 
 .workspace[data-left="closed"] .tool-surface {
@@ -1174,6 +1193,7 @@ button:focus-visible,
   position: absolute;
   top: 7px;
   left: 50%;
+  z-index: 2;
   width: 36px;
   height: 3px;
   border-radius: 3px;
@@ -1182,6 +1202,8 @@ button:focus-visible,
 }
 
 .tool-main {
+  position: relative;
+  z-index: 2;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
@@ -1209,6 +1231,9 @@ button:focus-visible,
   place-items: center;
   border-radius: 12px;
   background: var(--cobalt);
+  box-shadow:
+    0 8px 16px rgba(49, 85, 217, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28);
   color: white;
 }
 
@@ -1220,7 +1245,9 @@ button:focus-visible,
 .tool-context strong {
   overflow: hidden;
   max-width: 230px;
-  font-size: 11px;
+  font-size: 12px;
+  font-weight: 780;
+  letter-spacing: -0.025em;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -1286,6 +1313,8 @@ button:focus-visible,
 }
 
 .tool-expanded {
+  position: relative;
+  z-index: 2;
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
   gap: 12px;
