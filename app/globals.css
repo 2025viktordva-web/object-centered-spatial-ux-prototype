@@ -608,42 +608,21 @@ button:focus-visible,
   min-height: 820px;
   margin: 10px auto 160px;
   overflow: visible;
-  border: 1px solid rgba(28, 43, 39, 0.11);
-  border-radius: 8px;
-  background: var(--paper);
-  box-shadow:
-    0 calc(34px * var(--depth-strength)) calc(74px * var(--depth-strength)) rgba(33, 47, 43, 0.16),
-    0 3px 0 rgba(255, 255, 255, 0.9) inset;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
   transform: scale(var(--canvas-scale));
   transform-origin: top center;
-  transition:
-    transform 480ms var(--ease-space),
-    box-shadow 480ms var(--ease-space);
+  transition: transform 480ms var(--ease-space);
 }
 
 .document-object::before {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(90deg, rgba(41, 68, 59, 0.028) 1px, transparent 1px),
-    linear-gradient(rgba(41, 68, 59, 0.022) 1px, transparent 1px);
-  background-size: 24px 24px;
-  content: "";
-  pointer-events: none;
+  content: none;
 }
 
 .doc-spine {
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: 5px;
-  border-radius: 8px 0 0 8px;
-  background:
-    linear-gradient(
-      to bottom,
-      var(--apricot) 0 14%,
-      var(--cobalt) 14% 52%,
-      var(--fern) 52% 100%
-    );
+  display: none;
 }
 
 .doc-header {
@@ -652,7 +631,7 @@ button:focus-visible,
   grid-template-columns: minmax(0, 1fr) 150px;
   gap: 34px;
   padding: 48px 54px 36px 60px;
-  border-bottom: 1px solid var(--hairline);
+  border-bottom: 0;
 }
 
 .doc-eyebrow {
@@ -667,10 +646,7 @@ button:focus-visible,
 }
 
 .doc-eyebrow::before {
-  width: 22px;
-  height: 2px;
-  background: var(--cobalt);
-  content: "";
+  content: none;
 }
 
 .doc-header h1 {
@@ -692,10 +668,10 @@ button:focus-visible,
 
 .doc-code {
   align-self: start;
-  padding: 14px;
-  border: 1px solid var(--hairline);
-  border-radius: 10px;
-  background: rgba(232, 238, 235, 0.48);
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
 }
 
 .doc-code span,
@@ -718,12 +694,7 @@ button:focus-visible,
 }
 
 .doc-code i {
-  display: block;
-  width: 28px;
-  height: 3px;
-  margin-top: 13px;
-  border-radius: 2px;
-  background: var(--fern);
+  display: none;
 }
 
 .doc-section {
@@ -733,7 +704,6 @@ button:focus-visible,
   gap: 30px;
   padding: 32px 54px 34px 60px;
   border: 0;
-  border-bottom: 1px solid var(--hairline);
   background: transparent;
   color: inherit;
   text-align: left;
@@ -742,36 +712,20 @@ button:focus-visible,
 }
 
 .doc-section:hover {
-  background: rgba(49, 85, 217, 0.025);
+  background: transparent;
 }
 
 .doc-section.is-selected {
-  background: rgba(49, 85, 217, 0.045);
+  background: transparent;
 }
 
 .doc-section.is-selected::before,
 .doc-section.is-selected::after {
-  position: absolute;
-  width: 18px;
-  height: 18px;
-  border-color: var(--cobalt);
-  border-style: solid;
-  content: "";
-  pointer-events: none;
+  content: none;
 }
 
-.doc-section.is-selected::before {
-  top: 12px;
-  right: 12px;
-  border-width: 2px 2px 0 0;
-}
-
-.doc-section.is-selected::after {
-  right: auto;
-  bottom: 12px;
-  left: 12px;
-  top: auto;
-  border-width: 0 0 2px 2px;
+.doc-section.is-selected .section-content h2 {
+  color: var(--cobalt);
 }
 
 .section-index {
@@ -815,20 +769,13 @@ button:focus-visible,
 .phase {
   position: relative;
   min-height: 78px;
-  padding: 12px;
-  border-radius: 7px;
-  background: #edf1ee;
+  padding: 0 12px 0 0;
+  border-radius: 0;
+  background: transparent;
 }
 
 .phase::before {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 36%;
-  height: 3px;
-  border-radius: 2px;
-  background: var(--phase-color, var(--cobalt));
-  content: "";
+  content: none;
 }
 
 .phase strong,
@@ -855,8 +802,8 @@ button:focus-visible,
 }
 
 .metric-cell {
-  padding-top: 10px;
-  border-top: 2px solid var(--ink-950);
+  padding-top: 0;
+  border-top: 0;
 }
 
 .metric-cell strong,
@@ -878,15 +825,7 @@ button:focus-visible,
 }
 
 .object-tether {
-  position: absolute;
-  z-index: 6;
-  top: 36%;
-  right: -18px;
-  width: 38px;
-  height: 1px;
-  background: var(--cobalt);
-  box-shadow: 0 0 0 1px rgba(49, 85, 217, 0.08);
-  pointer-events: none;
+  display: none;
 }
 
 .object-tether::before,
